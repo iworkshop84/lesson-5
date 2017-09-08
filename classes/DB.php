@@ -3,41 +3,24 @@
 
 class DB{
 
+    private $dbh;
+    private $className='stdClass';
+
     public function __construct()
     {
-        $this->mysqli = new mysqli("localhost", "root", "", "mysite");
-
+       $this->dbh = new PDO('mysql:dbname=mysite;host=localhost', 'root', '');
     }
 
-    public function queryAll($sql, $class_name = "stdClass")
+    public function setClassName($className)
     {
-        $res = $this->mysqli->query($sql);
-        if(false === $res)
-        {
-            return false;
-        }
-        $ret =[];
-        while ($row = $res->fetch_object($class_name))
-        {
-            $ret[] = $row;
-        }
-        return $ret;
+        $this->className = $className;
     }
 
-    public function queryOne($sql, $class_name = "stdClass")
-    {
-        return $this->queryAll($sql, $class_name)[0];
-    }
+    public function query($sql, $params=[]){
 
-
-    public function queryIns($sql)
-    {
-        $res = $this->mysqli->query($sql);
-        if(false === $res)
-        {
-            return false;
-        }
-        return $res;
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute($params);
+        return $sth->fetchAll(PDO::FETCH_CLASS, $this->className);
     }
 
 }
