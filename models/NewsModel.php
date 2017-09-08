@@ -13,4 +13,9 @@ class NewsModel
     protected static $table = 'news';
 
 
+   // public $news_id;
+    public $news_name;
+    public $news_content;
+    public $news_date;
+
 }

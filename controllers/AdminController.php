@@ -7,7 +7,7 @@ class AdminController
     {
         if(isset($_POST['addnews'])){
 
-            $post = new News();
+            $post = new NewsModel();
 
             if(!empty($_POST['name'])){
                 $post->news_name = $_POST['name'];
@@ -18,7 +18,11 @@ class AdminController
             }
 
             if(isset($post->news_name) && isset($post->news_content)){
-                $post->newsAdd();
+                $post->news_date = date("Y-m-d H:i:s");
+
+                $post->insert();
+
+
                 header('Location: /index.php');
                 exit;
             }
