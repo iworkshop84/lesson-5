@@ -67,12 +67,23 @@ class AdminController
         }
 
 
+        if(isset($_POST['dellnews']))
+        {
+            if(isset($_GET['id'])){
+                $post = new NewsModel();
+                $post->news_id = $_GET['id'];
+                $post->delete();
+                header('Location: /Admin/Edit/');
+                exit;
+            }
+        }
+
+
         $items = NewsModel::findNewsByDate();
         $view = new View();
         $view->myitem = $myitem;
         $view->items = $items;
         $view->display('news/edit.php');
-
 
     }
 

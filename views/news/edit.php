@@ -24,7 +24,8 @@
             <p>
 
             </p>
-            <p> <button type="submit" name="editnews">Отправить</button></p>
+            <p> <button type="submit" name="editnews">Отправить</button>
+            <button type="submit" name="dellnews">Удалить</button></p>
         </form>
 
         <br/><h2>Список новостей</h2>

@@ -92,15 +92,12 @@ abstract class AbstractModel{
         foreach ($arr as $key=>$val){
             $ins[':' . $key] = $val;
         }
-        //var_dump($arr);
-        //var_dump($ins);
 
         $ins1 =[];
         foreach ($arr as $key=>$val){
             $ins1[$key] = $key .' = :' . $key;
         }
 
-        //var_dump($ins1);
         $where = array_shift($ins1);
 
         $sql = 'UPDATE '. static::$table .' 
@@ -109,10 +106,37 @@ abstract class AbstractModel{
         WHERE 
         ('. $where .')';
 
-        //var_dump($sql);
-       // die;
         $db = new DB();
         return $db->execute($sql, $ins);
+    }
+
+
+
+    public function delete()
+    {
+        $arr = get_object_vars($this);
+
+        function clean($data){
+            return (($data != null) && (!is_array($data)));
+        }
+        $arr = (array_filter($arr, "clean"));
+
+        $ins =[];
+        foreach ($arr as $key=>$val){
+            $ins[':' . $key] = $val;
+        }
+
+        $ins1 =[];
+        foreach ($arr as $key=>$val){
+            $ins1[$key] = $key .' = :' . $key;
+        }
+
+        $sql = 'DELETE FROM '. static::$table .' 
+        WHERE 
+        ('. implode(', ', ($ins1)) .')';
+
+        $db = new DB();
+        $db->execute($sql, $ins);
     }
 
 }
