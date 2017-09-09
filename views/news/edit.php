@@ -16,16 +16,21 @@
         <h2>Добавить новость</h2>
 
 
-
-        <form action="/index.php?ctrl=Admin&act=Add" method="post" enctype="multipart/form-data">
+        <form action="/index.php?ctrl=Admin&act=Edit&id=<?= $myitem->news_id; ?>" method="post" enctype="multipart/form-data">
             <p> <label for="name"> Имя новости: </label>
-                <input type="text" id="name" name="name"></p>
+                <input type="text" id="name" name="name" value="<?= $myitem->news_name; ?>"></p>
             <p> <label for="content"> Текст новости: </label></p>
-            <p><textarea name="content" id="content" style="width: 700px; height: 400px;"></textarea></p>
-            <p> <button type="submit" name="addnews">Отправить</button></p>
+            <p><textarea name="content" id="content" style="width: 700px; height: 400px;"><?= $myitem->news_content; ?></textarea></p>
+            <p>
+
+            </p>
+            <p> <button type="submit" name="editnews">Отправить</button></p>
         </form>
 
-
+        <br/><h2>Список новостей</h2>
+        <?php foreach ($items as $item): ?>
+            <h3><a href="<?= '/Admin/Edit/' . $item->news_id?>"><?= $item->news_name ?></a></h3>
+        <?php endforeach; ?>
 
     </div>
     <div id="sidebar" >

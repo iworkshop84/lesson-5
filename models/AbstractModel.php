@@ -55,10 +55,8 @@ abstract class AbstractModel{
 
     public function insert()
     {
-        // получаю все свойства объекта в виде массива с ключами\значениями
         $arr = get_object_vars($this);
 
-        // вычистил массив от пустых значений используя проверку по null
         function clean($data){
             return (($data != null) && (!is_array($data)));
         }
@@ -74,9 +72,47 @@ abstract class AbstractModel{
         ('. implode(', ', array_keys($ins)) .')';
 
         $db = new DB();
-        $db->execute($sql, $ins);
+        return $db->execute($sql, $ins);
+    }
 
 
+    public function update()
+    {
+
+        // чистим всё лишнее из массива
+        $arr = get_object_vars($this);
+
+        function clean($data){
+            return (($data != null) && (!is_array($data)));
+        }
+        $arr = (array_filter($arr, "clean"));
+
+        // делаем массив для подготовленного выражения
+        $ins =[];
+        foreach ($arr as $key=>$val){
+            $ins[':' . $key] = $val;
+        }
+        //var_dump($arr);
+        //var_dump($ins);
+
+        $ins1 =[];
+        foreach ($arr as $key=>$val){
+            $ins1[$key] = $key .' = :' . $key;
+        }
+
+        //var_dump($ins1);
+        $where = array_shift($ins1);
+
+        $sql = 'UPDATE '. static::$table .' 
+        SET
+        '. implode(', ', ($ins1)) .'
+        WHERE 
+        ('. $where .')';
+
+        //var_dump($sql);
+       // die;
+        $db = new DB();
+        return $db->execute($sql, $ins);
     }
 
 }

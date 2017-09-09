@@ -7,8 +7,7 @@ class NewsController
     public function actionAll()
     {
 
-        $items = NewsModel::findAll();
-       // var_dump($items);die;
+        $items = NewsModel::findNewsByDate();
 
         $view = new View();
         $view->items = $items;
