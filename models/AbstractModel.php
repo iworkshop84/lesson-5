@@ -21,6 +21,12 @@ abstract class AbstractModel{
     }
 
 
+    public function __isset($name)
+    {
+       return isset($this->data[$name]);
+    }
+
+
     public static function findAll()
     {
         $class = get_called_class();
@@ -55,7 +61,93 @@ abstract class AbstractModel{
 
     public function insert()
     {
+        $arr = $this->data;
+
+        $ins =[];
+        foreach ($arr as $key=>$val){
+            $ins[':' . $key] = $val;
+        }
+
+        $sql = 'INSERT INTO '. static::$table .' ('. implode(', ', array_keys($arr)) .') 
+        VALUES 
+        ('. implode(', ', array_keys($ins)) .')';
+
+        $db = new DB();
+        $db->execute($sql, $ins);
+        return $db->lastInsId();
+    }
+
+
+    public function update()
+    {
+        $arr = $this->data;
+
+        // делаем массив для подготовленного выражения
+        $ins =[];
+        $rools =[];
+        foreach ($arr as $key=>$val){
+            $ins[':' . $key] = $val;
+            $rools[$key] = $key .' = :' . $key;
+        }
+
+        // Удаляем из массива условий ключ id(он у нас всегда будет идти в свойствах первый)
+        $where = array_shift($rools);
+
+
+        $sql = 'UPDATE '. static::$table .' 
+        SET
+        '. implode(', ', ($rools)) .'
+        WHERE 
+        ('. $where .')';
+
+
+        $db = new DB();
+        return $db->execute($sql, $ins);
+
+    }
+
+
+
+    public function delete()
+    {
+        $arr = $this->data;
+
+        $ins =[];
+        $where =[];
+        foreach ($arr as $key=>$val){
+            $ins[':' . $key] = $val;
+            $where[$key] = $key .' = :' . $key;
+        }
+
+        $sql = 'DELETE FROM '. static::$table .' 
+        WHERE 
+        ('. implode(', ', ($where)) .')';
+
+        $db = new DB();
+        $db->execute($sql, $ins);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Оставил код для работы с именованными свойствами класса - на случай если пригодится.
+    public function insert()
+    {
+        var_dump($this->data);
+        die;
+
         $arr = get_object_vars($this);
+
 
         function clean($data){
             return (($data != null) && (!is_array($data)));
@@ -67,8 +159,8 @@ abstract class AbstractModel{
             $ins[':' . $key] = $val;
         }
 
-        $sql = 'INSERT INTO '. static::$table .' ('. implode(', ', array_keys($arr)) .') 
-        VALUES 
+        $sql = 'INSERT INTO '. static::$table .' ('. implode(', ', array_keys($arr)) .')
+        VALUES
         ('. implode(', ', array_keys($ins)) .')';
 
         $db = new DB();
@@ -92,18 +184,18 @@ abstract class AbstractModel{
         foreach ($arr as $key=>$val){
             $ins[':' . $key] = $val;
         }
-
+        // Делаем массив для условий
         $ins1 =[];
         foreach ($arr as $key=>$val){
             $ins1[$key] = $key .' = :' . $key;
         }
-
+        // Удаляем из массива условий ключ id(он у нас всегда будет идти в свойствах первый)
         $where = array_shift($ins1);
 
-        $sql = 'UPDATE '. static::$table .' 
+        $sql = 'UPDATE '. static::$table .'
         SET
         '. implode(', ', ($ins1)) .'
-        WHERE 
+        WHERE
         ('. $where .')';
 
         $db = new DB();
@@ -131,12 +223,24 @@ abstract class AbstractModel{
             $ins1[$key] = $key .' = :' . $key;
         }
 
-        $sql = 'DELETE FROM '. static::$table .' 
-        WHERE 
+        $sql = 'DELETE FROM '. static::$table .'
+        WHERE
         ('. implode(', ', ($ins1)) .')';
 
         $db = new DB();
         $db->execute($sql, $ins);
     }
+*/
+
+
+
+
+
+
+
+
+
+
+
 
 }
