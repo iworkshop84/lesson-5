@@ -8,7 +8,12 @@ class DB{
 
     public function __construct()
     {
+       try{
        $this->dbh = new PDO('mysql:dbname=mysite;host=localhost', 'root', '');
+       $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+       } catch (DOException $exc){
+           throw new PDOException ();
+       }
     }
 
     public function setClassName($className)

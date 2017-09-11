@@ -5,8 +5,6 @@ abstract class AbstractModel{
 
     protected static $table;
 
-
-
     protected $data = [];
 
     public function __set($k, $v)
@@ -55,7 +53,12 @@ abstract class AbstractModel{
         $db = new DB;
 
         $db->setClassName($class);
-        return $db->query($sql, [':val' => $value])[0];
+        $res = $db->query($sql, [':val' => $value])[0];
+        if(empty($res))
+        {
+            throw new ModelException('Статья не найдена');
+        }
+        return $res;
     }
 
 
@@ -107,7 +110,6 @@ abstract class AbstractModel{
     }
 
 
-
     public function delete()
     {
         $arr = $this->data;
@@ -127,7 +129,13 @@ abstract class AbstractModel{
         $db->execute($sql, $ins);
     }
 
-
+    public function save(){
+        if(isset($this->news_id)){
+           return $this->update();
+        }else{
+          return  $this->insert();
+        }
+    }
 
 
 

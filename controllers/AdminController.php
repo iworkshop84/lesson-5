@@ -6,7 +6,6 @@ class AdminController
 
     public function actionAdd()
     {
-
         if(isset($_POST['addnews'])){
 
             $post = new NewsModel();
@@ -22,7 +21,7 @@ class AdminController
             if(isset($post->news_name) && isset($post->news_content)){
                 $post->news_date = date("Y-m-d H:i:s");
 
-                $res_id = $post->insert();
+                $res_id = $post->save();
                 header('Location: /Admin/Edit/' . $res_id);
                 exit;
             }
@@ -35,7 +34,6 @@ class AdminController
 
     public function actionEdit()
     {
-
         $mypost = NewsModel::findOneInColumn('news_id', $_GET['id']);
 
         if(isset($_POST['editnews']))
@@ -50,7 +48,7 @@ class AdminController
 
             if(isset($mypost->news_name) && isset($mypost->news_content)&& isset($mypost->news_id))
             {
-                $mypost->update();
+                $mypost->save();
                 header('Location: /Admin/Edit/' . $mypost->news_id);
                 exit;
             }
@@ -59,14 +57,13 @@ class AdminController
 
         if(isset($_POST['dellnews']))
         {
-
             if(isset($_GET['id'])){
                 $post = new NewsModel();
                 $post->news_id = $_GET['id'];
 
                 $post->delete();
 
-                header('Location: /Admin/Edit/');
+                header('Location: /Admin/Add/');
                 exit;
             }
         }
