@@ -27,7 +27,10 @@ class AdminController
             }
         }
 
+        $errlog =  ErrorLog::read();
+
         $view = new View();
+        $view->errors = $errlog;
         $view->display('news/add.php');
     }
 

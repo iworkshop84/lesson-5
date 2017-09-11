@@ -16,6 +16,13 @@ try
 }
 catch (ModelException $err)
 {
+    //var_dump($err);
+    //die;
+    $log = new ErrorLog();
+    $log->assign($err);
+    $log->write();
+
+
     $view = new View();
     $view->error = $err->getMessage();
     header('HTTP/1.1 404 Not Found');
@@ -23,6 +30,10 @@ catch (ModelException $err)
 }
 catch (PDOException $err)
 {
+    $log = new ErrorLog();
+    $log->assign($err);
+    $log->write();
+
     $view = new View();
     $view->error = $err->getMessage();
     header('HTTP/1.1 403 Not Found');

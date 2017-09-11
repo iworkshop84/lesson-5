@@ -26,6 +26,10 @@
         </form>
 
 
+        <br/><h2>Лог ошибок</h2>
+        <?php foreach ($errors as $item): ?>
+            <div><?= $item; ?></div>
+        <?php endforeach; ?>
 
     </div>
     <div id="sidebar" >

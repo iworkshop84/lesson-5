@@ -56,7 +56,7 @@ abstract class AbstractModel{
         $res = $db->query($sql, [':val' => $value])[0];
         if(empty($res))
         {
-            throw new ModelException('Статья не найдена');
+            throw new ModelException ('Извините, такой статьи на сайте нет');
         }
         return $res;
     }
