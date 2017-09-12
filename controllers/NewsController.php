@@ -18,6 +18,10 @@ class NewsController
     {
         $id = $_GET['id'];
         $item = NewsModel::findOneInColumn('news_id', $id);
+        if(empty($item))
+        {
+            throw new ModelException ('Запись не найдена', 1);
+        }
 
         $view = new View();
         $view->items = $item;

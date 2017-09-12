@@ -7,6 +7,8 @@
  * @property $file
  * @property $line
  * @property $time
+ * @property $code
+ *
  *
  *
  */
@@ -27,10 +29,11 @@ class ErrorLog
 
     public function assign($data)
     {
-        $this->message = $data->getMessage();
-        $this->file = $data->getFile();
-        $this->line = $data->getLine();
-        $this->time = date("Y-m-d H:i:s");
+        $this->message = 'Сообщение: ' . $data->getMessage();
+        $this->code = 'Код ошибки: ' . $data->getCode();
+        $this->file = 'Файл: ' .$data->getFile();
+        $this->line = 'Строка: ' .$data->getLine();
+        $this->time = 'Дата: ' . date("Y-m-d H:i:s");
     }
 
     public function write()

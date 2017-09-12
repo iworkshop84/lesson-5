@@ -11,8 +11,8 @@ class DB{
        try{
        $this->dbh = new PDO('mysql:dbname=mysite;host=localhost', 'root', '');
        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-       } catch (DOException $exc){
-           throw new PDOException ();
+       } catch (PDOException $exc){
+           throw new ModelException('Ошибка БД', 2) ;
        }
     }
 
@@ -24,14 +24,22 @@ class DB{
     public function query($sql, $params=[]){
 
         $sth = $this->dbh->prepare($sql);
+        try{
         $sth->execute($params);
+        } catch (PDOException $exc){
+            throw new ModelException('Ошибка запроса к БД', 2) ;
+        }
         return $sth->fetchAll(PDO::FETCH_CLASS, $this->className);
     }
 
     public function execute($sql, $params=[]){
 
         $sth = $this->dbh->prepare($sql);
+        try{
         return $sth->execute($params);
+        } catch (PDOException $exc){
+            throw new ModelException('Ошибка запроса к БД', 2) ;
+        }
 
     }
 
