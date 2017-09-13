@@ -1,6 +1,8 @@
 <?php
 
-
+use App\Models\ExceptionM;
+use App\Classes\ErrorLog;
+use App\Classes\View;
 
 require_once __DIR__ . '/autoload.php';
 
@@ -12,7 +14,7 @@ $ctrl = !empty($pathParts[1]) ? $pathParts[1] : 'News';
 $act = !empty($pathParts[2]) ? $pathParts[2] : 'All';
 $id = !empty($pathParts[3]) ? $pathParts[3] : null;
 
-$controllerClassName = $ctrl . 'Controller';
+$controllerClassName = 'App\\Controllers\\' . $ctrl;
 
 try
 {
@@ -26,7 +28,7 @@ try
         $controller->$method();
     }
 }
-catch (ModelException $err)
+catch (ExceptionM $err)
 {
     $log = new ErrorLog();
     $log->assign($err);

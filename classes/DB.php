@@ -1,5 +1,7 @@
 <?php
+namespace App\Classes;
 
+use App\Models\ExceptionM;
 
 class DB{
 
@@ -9,10 +11,10 @@ class DB{
     public function __construct()
     {
        try{
-       $this->dbh = new PDO('mysql:dbname=mysite;host=localhost', 'root', '');
-       $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-       } catch (PDOException $exc){
-           throw new ModelException('Ошибка подключения к БД', 2) ;
+       $this->dbh = new \PDO('mysql:dbname=mysite;host=localhost', 'root', '');
+       $this->dbh->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+       } catch (\PDOException $exc){
+           throw new ExceptionM ('Ошибка подключения к БД', 2) ;
        }
     }
 
@@ -26,10 +28,10 @@ class DB{
         $sth = $this->dbh->prepare($sql);
         try{
         $sth->execute($params);
-        } catch (PDOException $exc){
-            throw new ModelException('Ошибка запроса к БД', 2) ;
+        } catch (\PDOException $exc){
+            throw new ExceptionM('Ошибка запроса к БД', 2) ;
         }
-        return $sth->fetchAll(PDO::FETCH_CLASS, $this->className);
+        return $sth->fetchAll(\PDO::FETCH_CLASS, $this->className);
     }
 
     public function execute($sql, $params=[]){
@@ -37,8 +39,8 @@ class DB{
         $sth = $this->dbh->prepare($sql);
         try{
         return $sth->execute($params);
-        } catch (PDOException $exc){
-            throw new ModelException('Ошибка запроса к БД', 2) ;
+        } catch (\PDOException $exc){
+            throw new ExceptionM('Ошибка запроса к БД', 2) ;
         }
 
     }

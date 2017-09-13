@@ -1,14 +1,19 @@
 <?php
+namespace App\Models;
 
+
+use App\Models\AbstractM;
+use App\Classes\DB;
 /**
- * Class NewsModel
+ * Class News
  * @property $news_id
  * @property $news_name
  * @property $news_content
  * @property $news_date
  */
-class NewsModel
-    extends AbstractModel
+
+class News
+    extends AbstractM
 {
     protected static $table = 'news';
 

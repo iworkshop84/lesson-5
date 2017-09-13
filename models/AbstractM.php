@@ -1,7 +1,9 @@
 <?php
+namespace App\Models;
 
+use App\Classes\DB;
 
-abstract class AbstractModel{
+abstract class AbstractM{
 
     protected static $table;
 

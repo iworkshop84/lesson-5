@@ -1,14 +1,18 @@
 <?php
+namespace App\Controllers;
 
+use App\Models\News;
+use App\Classes\ErrorLog;
+use App\Classes\View;
 
-class AdminController
+class Admin
 {
 
     public function actionAdd()
     {
         if(isset($_POST['addnews'])){
 
-            $post = new NewsModel();
+            $post = new News();
 
             if(!empty($_POST['name'])){
                 $post->news_name = $_POST['name'];
@@ -37,7 +41,7 @@ class AdminController
 
     public function actionEdit($id=null)
     {
-        $mypost = NewsModel::findOneInColumn('news_id', $id);
+        $mypost = News::findOneInColumn('news_id', $id);
 
         if(isset($_POST['editnews']))
         {
@@ -61,7 +65,7 @@ class AdminController
         if(isset($_POST['dellnews']))
         {
             if(isset($id)){
-                $post = new NewsModel();
+                $post = new News();
                 $post->news_id = $id;
 
                 $post->delete();
@@ -72,7 +76,7 @@ class AdminController
         }
 
 
-        $items = NewsModel::findNewsByDate();
+        $items = News::findNewsByDate();
         $view = new View();
         $view->myitem = $mypost;
         $view->items = $items;

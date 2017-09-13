@@ -1,7 +1,12 @@
 <?php
 
+namespace App\Controllers;
 
-class NewsController
+use App\Models\ExceptionM;
+use App\Models\News as NewsModel;
+use App\Classes\View;
+
+class News
 {
 
     public function actionAll()
@@ -20,7 +25,7 @@ class NewsController
         $item = NewsModel::findOneInColumn('news_id', $id);
         if(empty($item))
         {
-            throw new ModelException ('Запись не найдена', 1);
+            throw new ExceptionM ('Запись не найдена', 1);
         }
 
         $view = new View();
