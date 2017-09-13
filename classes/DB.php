@@ -12,7 +12,7 @@ class DB{
        $this->dbh = new PDO('mysql:dbname=mysite;host=localhost', 'root', '');
        $this->dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
        } catch (PDOException $exc){
-           throw new ModelException('Ошибка БД', 2) ;
+           throw new ModelException('Ошибка подключения к БД', 2) ;
        }
     }
 

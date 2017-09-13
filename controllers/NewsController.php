@@ -14,9 +14,9 @@ class NewsController
         $view->display('news/all.php');
     }
 
-    public function actionOne()
+    public function actionOne($id=null)
     {
-        $id = $_GET['id'];
+
         $item = NewsModel::findOneInColumn('news_id', $id);
         if(empty($item))
         {

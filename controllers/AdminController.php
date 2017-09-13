@@ -35,9 +35,9 @@ class AdminController
     }
 
 
-    public function actionEdit()
+    public function actionEdit($id=null)
     {
-        $mypost = NewsModel::findOneInColumn('news_id', $_GET['id']);
+        $mypost = NewsModel::findOneInColumn('news_id', $id);
 
         if(isset($_POST['editnews']))
         {
@@ -60,13 +60,13 @@ class AdminController
 
         if(isset($_POST['dellnews']))
         {
-            if(isset($_GET['id'])){
+            if(isset($id)){
                 $post = new NewsModel();
-                $post->news_id = $_GET['id'];
+                $post->news_id = $id;
 
                 $post->delete();
 
-                header('Location: /Admin/Add/');
+                header('Location: /Admin/Edit/');
                 exit;
             }
         }

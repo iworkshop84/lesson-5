@@ -17,7 +17,7 @@
 
 
 
-        <form action="/index.php?ctrl=Admin&act=Add" method="post" enctype="multipart/form-data">
+        <form action="/Admin/Add" method="post" enctype="multipart/form-data">
             <p> <label for="name"> Имя новости: </label>
                 <input type="text" id="name" name="name"></p>
             <p> <label for="content"> Текст новости: </label></p>
@@ -38,7 +38,8 @@
             <div class="widgetcont">
 
                 <p><a href="/index.php">Главная</a></p>
-                <p><a href="/index.php?ctrl=Admin&act=Add">Добавить новость</a></p>
+                <p><a href="/Admin/Add">Добавить новость</a></p>
+                <p><a href="/Admin/Edit">Редактировать новость</a></p>
 
             </div>
         </div>
