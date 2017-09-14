@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\ExceptionM;
 use App\Models\News as NewsModel;
 use App\Classes\View;
+use Twig\Template;
 
 class News
 {
@@ -16,6 +17,7 @@ class News
 
         $view = new View();
         $view->items = $items;
+
         $view->display('news/all.php');
     }
 

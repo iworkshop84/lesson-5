@@ -1,10 +1,10 @@
 <?php
-
+require_once __DIR__ . '/autoload.php';
 use App\Models\ExceptionM;
 use App\Classes\ErrorLog;
 use App\Classes\View;
 
-require_once __DIR__ . '/autoload.php';
+
 
 
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -15,6 +15,7 @@ $act = !empty($pathParts[2]) ? $pathParts[2] : 'All';
 $id = !empty($pathParts[3]) ? $pathParts[3] : null;
 
 $controllerClassName = 'App\\Controllers\\' . $ctrl;
+
 
 try
 {
